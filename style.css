@@ -16,7 +16,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 
 form{
   font-family: "Montserrat", sans-serif;
-  width: 750px;
+  width: 500px;
   margin: 0 auto;
   padding-top: 30px;
 }
@@ -43,21 +43,32 @@ form{
   display: flex;
   justify-content: space-between;
   padding-top: 30px;
+  width: 350px;
+  margin: 0 auto;
 }
 
-h2{
+.title{
   width: 350px;
   height: 30px;
   color: white;
-  background-color: #00A779 ;
-  text-align: center;
-  padding-top: 8px;
+  background-color: #00A779;
+  display: flex;
+  justify-content: space-between;
+}
+
+h2{
+  padding: 8px 0 0 20px;
   font-size: 18px;
   font-weight: 500;
 }
 
-.to-title{
-  background-color: #437DD4;
+.checkbox-sort{
+  width: 230px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  align-items: center;
+  padding-right: 20px;
 }
 
 .tasks-list{
@@ -66,16 +77,16 @@ h2{
   border: 1px solid #00A779;
 }
 
-.tasks-to{
-  border: 1px solid #437DD4;
-}
-
 .task{
   position: relative;
   width: 100%;
   font-size: 12px;
   font-weight: 500;
   padding-left: 30px ;
+}
+
+.task-do{
+  text-decoration: line-through;
 }
 
 .task::before{
@@ -106,4 +117,5 @@ h2{
   padding-right: 30px;
   /*display: none;*/
 }
+
 

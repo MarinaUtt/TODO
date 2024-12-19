@@ -1,64 +1,60 @@
 const inputTask = document.querySelector('.input-task');
 const submitTask = document.querySelector('.submit-task');
-const TasksTo = document.querySelector('.tasks-to');
-const TasksDo = document.querySelector('.tasks-do');
-let ListTasks = [];
+const tasks = document.querySelector('.tasks-list');
+const checkedDo = document.querySelector('.checked-do');
+const checkedTo = document.querySelector('.checked-to');
+const checkboxSort = document.querySelector('.checkbox-sort');
+let listTasks = [];
 
 submitTask.addEventListener('click', (e) =>{
   e.preventDefault();
   value = inputTask.value;
 
   if(!!value.trim()) {
-    const NewTask = {
+    const newTask = {
       task: value,
       do: false,
     }
-    ListTasks.push(NewTask);
+    listTasks.push(newTask);
     inputTask.value ='';
     renderTasks();
   }
- 
 })
 
-TasksTo.addEventListener('click', (event) =>{
+tasks.addEventListener('click', (event) =>{
   const element = event.target;
   if(element.classList.contains('task')) {
-    ListTasks = ListTasks.filter((item) => item.task !== element.textContent.trim());
+    listTasks = listTasks.filter((item) => item.task !== element.textContent.trim());
     const changedItem = {
       task:element.textContent,
       do:true,
     }
-    ListTasks.push(changedItem);
+    listTasks.push(changedItem);
     renderTasks();
   }
-  if(element.classList.contains('delete')) {
-    ListTasks = ListTasks.filter((item) => item.task !== element.parentElement.textContent);
-    renderTasks();
-  }
-})
-
-TasksDo.addEventListener('click', (event) =>{
-  const element = event.target;
-  if(element.classList.contains('task')) {
-    ListTasks = ListTasks.filter((item) => item.task !== element.textContent.trim());
+  if(element.classList.contains('task-do')) {
+    listTasks = listTasks.filter((item) => item.task !== element.textContent.trim());
     const changedItem = {
       task:element.textContent,
       do:false,
     }
-    ListTasks.push(changedItem);
+    listTasks.push(changedItem);
     renderTasks();
   }
   if(element.classList.contains('delete')) {
-    ListTasks = ListTasks.filter((item) => item.task !== element.parentElement.textContent);
+    listTasks = listTasks.filter((item) => item.task !== element.parentElement.textContent);
     renderTasks();
   }
 })
 
+checkboxSort.addEventListener('change', function() {
+  renderTasks();
+})
 
-function renderTasks () {
-  TasksDo.textContent = '';
-  TasksTo.textContent = '';
-  ListTasks.forEach((item) => {
+
+function renderTasks() {
+  tasks.textContent = '';
+  listTasks.forEach((item) => {
     const newString = document.createElement('div');
     const newElement = document.createElement('div');
     const newDelete = document.createElement('div');
@@ -66,21 +62,33 @@ function renderTasks () {
     newString.className = 'string';
     newElement.className = 'task';
     newDelete.className = 'delete';
-    if (item.do) {
-        newElement.classList.add('task-do');
-        TasksDo.prepend(newString);
-        newString.prepend(newElement,newDelete);
+    if (!!checkedDo.checked && !!checkedTo.checked) {
+      if (!!item.do) {
+      newElement.classList.add('task-do');
+      tasks.append(newString);
+      newString.prepend(newElement,newDelete);
       } else {
-        TasksTo.prepend(newString);
-        newString.prepend(newElement,newDelete);
+      tasks.prepend(newString);
+      newString.prepend(newElement,newDelete);
       }
+    }
+    if (!checkedDo.checked && !!checkedTo.checked) {
+      if (!item.do) {
+      tasks.prepend(newString);
+      newString.prepend(newElement,newDelete);
+      }
+    }
+    if (!!checkedDo.checked && !checkedTo.checked) {
+      if (!!item.do) {
+      newElement.classList.add('task-do');
+      tasks.append(newString);
+      newString.prepend(newElement,newDelete);
+      }
+    }
   })
-}
+} 
 
-function deleteTask(){
-  const deleteElement = element.parentElement.textContent;
-  ListTasks = ListTasks.filter((item) => item.task == deleteElement);
-}
+
 
 
 
